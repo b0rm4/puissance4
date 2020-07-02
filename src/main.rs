@@ -13,7 +13,7 @@ fn main() {
 
     let mut grid = init_grille();
     // println!("{:?}", grid);
-    // grid[3][4] = '4';
+    grid[0][6] = 'Y';
     //println!("{:?}", grid[3]);
     show_grille(&grid);
     let mut tour = 1;
@@ -214,8 +214,77 @@ fn verification_puissance(grid: &[Vec<char>]) -> &str {
 
     buffer_verif = vec![];
 
-    for (l,c) in 0..6 {
+    let largeur = 7;
+    let hauteur = 6;
+
+    for l in 0..=largeur+hauteur-2 {
+        for c in 0..=l {
+            let i: i16 = l - c;
+            if i < hauteur && c < largeur {
+                // println!("i: {}", i);
+                // println!("diag: {}", grid[i as usize][c as usize]);
+                if grid[i as usize][c as usize] == 'Y' {
+                    y_compteur+=1;
+                    buffer_verif.push(grid[i as usize][c as usize]);
+                    if y_compteur == 4 {println!("Puissance du Y"); return "Puissance_Y"; }
+                } else {
+                    y_compteur = 0;
+                }
+                if grid[i as usize][c as usize] == 'U' {
+                    u_compteur+=1;
+                    buffer_verif.push(grid[i as usize][c as usize]);
+                    if u_compteur == 4 {println!("Puissance du U"); return "Puissance_U"; }
+                } else {
+                    u_compteur = 0;
+                }
+            }
+        }
+        buffer_verif = vec![];
+        y_compteur = 0;
+        u_compteur = 0;
     }
+
+    let mut rev_grid = vec![];
+
+    for l in 0..=5 {
+        let mut rev_row = grid[l].clone();
+        rev_row.reverse();
+        // println!("{:?}", rev_row);
+        rev_grid.push(rev_row);
+    }
+
+    // println!("{:?}", rev_grid);
+
+
+    buffer_verif = vec![];
+
+    for l in 0..=largeur+hauteur-2 {
+        for c in 0..=l {
+            let i: i16 = l - c;
+            if i < hauteur && c < largeur {
+                // println!("i: {}", i);
+                // println!("diag: {}", rev_grid[i as usize][c as usize]);
+                if rev_grid[i as usize][c as usize] == 'Y' {
+                    y_compteur+=1;
+                    buffer_verif.push(rev_grid[i as usize][c as usize]);
+                    if y_compteur == 4 {println!("Puissance du Y"); return "Puissance_Y"; }
+                } else {
+                    y_compteur = 0;
+                }
+                if rev_grid[i as usize][c as usize] == 'U' {
+                    u_compteur+=1;
+                    buffer_verif.push(rev_grid[i as usize][c as usize]);
+                    if u_compteur == 4 {println!("Puissance du U"); return "Puissance_U"; }
+                } else {
+                    u_compteur = 0;
+                }
+            }
+        }
+        buffer_verif = vec![];
+        y_compteur = 0;
+        u_compteur = 0;
+    }
+
 
     "Aucun Gagnant"
 }
