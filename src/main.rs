@@ -13,7 +13,7 @@ fn main() {
 
     let mut grid = init_grille();
     // println!("{:?}", grid);
-    grid[0][6] = 'Y';
+    // grid[0][6] = 'Y';
     //println!("{:?}", grid[3]);
     show_grille(&grid);
     let mut tour = 1;
